@@ -1,8 +1,16 @@
 ##################################
-# Credentials
+# FUT Credentials
 email = ''
 password = ''
 secret_answer = ''
 code = ''
 platform = ''
+##################################
+
+##################################
+# DB Credentials
+host = ''
+username = ''
+password = ''
+port = ''
 ##################################

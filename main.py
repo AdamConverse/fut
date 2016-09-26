@@ -24,7 +24,7 @@ def stream_market_scrape(cur, pages=0):
     fut_conn = fut.Core(config.email, config.password, config.secret_answer, code=config.code, platform=config.platform, debug=False)
     i = 0
     if pages is 0:
-        pages = 100
+        pages = 100000000
     for page in range(pages):
         items = fut_conn.searchAuctions('player', start=page, level='gold')
         for item in items:
@@ -33,9 +33,9 @@ def stream_market_scrape(cur, pages=0):
             sys.stdout.write("Number of Cards: %d   \r" % (i))
             sys.stdout.flush()
         if items[0]["expires"] < 2400:
-            pages += 500
+            page += 500
         if items[0]["expires"] > 3600:
-            pages -= 100
+            page -= 100
         time.sleep(.5)
     print "\ndone"
     return

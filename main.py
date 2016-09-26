@@ -21,7 +21,7 @@ def update_player_database(cur, pages=0):
 
 def stream_market_scrape(cur, pages=0):
     """Stream output of current progress of market scrape."""
-    fut_conn = fut.Core(config.email, config.password, config.secret_answer, code=config.code, platform=config.platform, debug=True)
+    fut_conn = fut.Core(config.email, config.password, config.secret_answer, code=config.code, platform=config.platform, debug=False)
     i = 0
     if pages is 0:
         pages = 100
@@ -32,7 +32,7 @@ def stream_market_scrape(cur, pages=0):
             i = i + 1
             sys.stdout.write("Number of Cards: %d   \r" % (i))
             sys.stdout.flush()
-        time.sleep(.1)
+        time.sleep(.25)
     print "\ndone"
     return
 

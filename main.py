@@ -19,19 +19,19 @@ def update_player_database(cur, pages=0):
     return
 
 
-def stream_market_scrape(cur, pages=0):
+def stream_market_scrape(cur):
     """Stream output of current progress of market scrape."""
     fut_conn = fut.Core(config.email, config.password, config.secret_answer, code=config.code, platform=config.platform, debug=False)
     i = 0
-    if pages is 0:
-        pages = 100000000
-    for page in range(pages):
+    page = 1
+    while true:
         items = fut_conn.searchAuctions('player', start=page, level='gold')
         for item in items:
             api.post_transaction(item, cur)
             i = i + 1
             sys.stdout.write("Number of Cards: %d   \r" % (i))
             sys.stdout.flush()
+        page += 1
         if items[0]["expires"] < 2400:
             page += 500
         if items[0]["expires"] > 3600:

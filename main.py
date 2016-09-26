@@ -24,7 +24,7 @@ def stream_market_scrape(cur):
     fut_conn = fut.Core(config.email, config.password, config.secret_answer, code=config.code, platform=config.platform, debug=False)
     i = 0
     page = 1
-    while true:
+    while True:
         items = fut_conn.searchAuctions('player', start=page, level='gold')
         for item in items:
             api.post_transaction(item, cur)

@@ -37,7 +37,7 @@ def stream_market_scrape(cur):
         print "Expires:" + str(items[0]["expires"])
         print "Page:" + str(page)
         print "Number of cards: " + str(i) + "\n"
-        time.sleep(random.randint(.5,3))
+        time.sleep(random.randint(1,3))
     print "\ndone"
     return
 

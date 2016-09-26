@@ -26,6 +26,8 @@ def stream_market_scrape(cur):
     page = 1
     while True:
         items = fut_conn.searchAuctions('player', start=page, level='gold')
+        if len(items) < 1:
+            continue
         for item in items:
             api.post_transaction(item, cur)
             i = i + 1

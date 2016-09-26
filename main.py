@@ -26,12 +26,14 @@ def stream_market_scrape(cur, pages=0):
     if pages is 0:
         pages = 100
     for page in range(pages):
-        items = fut_conn.searchAuctions('player', start=100+page, level='gold')
+        items = fut_conn.searchAuctions('player', start=page, level='gold')
         for item in items:
             api.post_transaction(item, cur)
             i = i + 1
             sys.stdout.write("Number of Cards: %d   \r" % (i))
             sys.stdout.flush()
+            if item["expires"] < 2400:
+                pages += 100
         time.sleep(.25)
     print "\ndone"
     return

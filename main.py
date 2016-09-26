@@ -32,10 +32,10 @@ def stream_market_scrape(cur, pages=0):
             i = i + 1
             sys.stdout.write("Number of Cards: %d   \r" % (i))
             sys.stdout.flush()
-            if item["expires"] < 2400:
-                pages += 500
-            if item["expires"] > 3600:
-                pages -= 100
+        if item[0]["expires"] < 2400:
+            pages += 500
+        if item[0]["expires"] > 3600:
+            pages -= 100
         time.sleep(.5)
     print "\ndone"
     return

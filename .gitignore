@@ -3,3 +3,4 @@ config.py
 test.json
 *.log
 cookies.txt
+*.out

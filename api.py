@@ -55,3 +55,8 @@ def get_player(player_id, cur):
     """Get player from database by id."""
     cur.execute("""SELECT * FROM fut_players WHERE id = %s;""", [player_id])
     return cur.fetchone()
+
+
+def get_player_transactions(player_id, cur):
+    cur.execute("""SELECT * FROM fut_transactions WHERE assetId = %s;""", [player_id])
+    return cur.fetchone()

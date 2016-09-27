@@ -20,24 +20,29 @@ def update_player_database(cur, pages=0):
     return
 
 
-def stream_market_scrape(cur):
+def stream_market_scrape(cur, conn):
     """Stream output of current progress of market scrape."""
     fut_conn = fut.Core(config.email, config.password, config.secret_answer, code=config.code, platform=config.platform, debug=False)
     i = 0
     page = 1
     stop = False
     while stop is False:
-        items = fut_conn.searchAuctions('player', start=page, level='gold')
-        if len(items) < 1:
-            continue
-        for item in items:
-            api.post_transaction(item, cur)
-            i = i + 1
-        page += 1
-        print "Expires:" + str(items[0]["expires"])
-        print "Page:" + str(page)
-        print "Number of cards: " + str(i) + "\n"
-        time.sleep(random.randint(1,3))
+        try:
+            items = fut_conn.searchAuctions('player', start=page, level='gold')
+            if len(items) < 1:
+                continue
+            for item in items:
+                api.post_transaction(item, cur)
+                i = i + 1
+            page += 1
+            print "Expires:" + str(items[0]["expires"])
+            print "Page:" + str(page)
+            print "Number of cards: " + str(i) + "\n"
+            conn.commit()
+            time.sleep(random.randint(1,3))
+        except InternalServerError:
+            page = 1
+            time.sleep(30)
     print "\ndone"
     return
 
@@ -50,7 +55,7 @@ if __name__ == "__main__":
         sys.exit()
     cur = conn.cursor()
 
-    stream_market_scrape(cur)
+    stream_market_scrape(cur, conn)
 
     conn.commit()
     cur.close()

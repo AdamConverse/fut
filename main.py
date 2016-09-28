@@ -39,8 +39,8 @@ def stream_market_scrape(cur, conn):
             print "Page:" + str(page)
             print "Number of cards: " + str(i) + "\n"
             conn.commit()
-            time.sleep(random.randint(1,3))
-        except InternalServerError:
+            time.sleep(random.randint(1, 3))
+        except:
             page = 1
             time.sleep(30)
     print "\ndone"
